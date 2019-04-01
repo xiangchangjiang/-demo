@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by anonymous (http://jsbin.com/zuzomarozu/3/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+  
+<style id="jsbin-css">
+.window{
+  width:150px;
+  height:100px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+#imgwrapper{
+  display:flex;
+  //border:10px solid red;
+  transition:transform 0.3s;
+  
+}
+.red{
+  color:red;
+}
+
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="images" id="imgwrapper">
+    <img src="https://i.loli.net/2019/03/31/5ca0cd0f56bd1.jpg" alt="轮播图1" width=150 height=100>
+    <img src="https://i.loli.net/2019/03/31/5ca0cd16e4904.jpg" alt="轮播图2" width=150 height=100>
+    <img src="https://i.loli.net/2019/03/31/5ca0cd18d3931.jpg" alt="轮播图3" width=150 height=100>
+  </div>
+</div>  
+<div class="buttons">
+  <button id='p1'>第1张</button>
+  <button id='p2'>第2张</button>
+  <button id='p3'>第3张</button>
+</div>
+  
+<script id="jsbin-javascript">
+allButtons = $('.buttons button')
+size = allButtons.length
+
+//为每个按钮添加点击监听
+for (let i = 0; i < allButtons.length; i++) {
+  $(allButtons[i]).on('click', function(xx) {
+    var index = $(xx.currentTarget).index() //记录当前按钮在所有按钮中排第几，从0开始
+    var s = index * (-150)
+      //console.log(index)
+    n = index   //n重新赋值，使下面激活的按钮为当前点击的按钮
+    $('#imgwrapper').css({
+      transform: 'translateX(' + s + 'px)'
+    })
+    activeButton(allButtons.eq(n % size))
+  })
+}
+
+
+
+//自动播放
+n = 0                 //使用一个新变量，用它与长度的余数来设置循环数
+playSlide(n%size)     //先运行一次
+timerId = setTimer()  //设置循环播放
+
+//鼠标滑入暂停
+$('.window').on('mouseenter', function() {
+    window.clearInterval(timerId)
+})
+
+//鼠标滑出继续播放
+$('.window').on('mouseleave', function() {
+  timerId = setTimer()
+})
+
+
+//以下是工具函数
+function activeButton(button) {
+  button.addClass('red')
+    .siblings('.red').removeClass('red')
+}
+
+function setTimer() {
+  return setInterval(() => {
+    n += 1
+    playSlide(n%size)
+  }, 2000)
+}
+
+function playSlide(index){
+  allButtons.eq(index).trigger('click')
+}
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

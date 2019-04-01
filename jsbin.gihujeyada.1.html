@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2019 by anonymous (http://jsbin.com/gihujeyada/1/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+  
+<style id="jsbin-css">
+.window{
+  width:150px;
+  height:100px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+#imgwrapper{
+  display:flex;
+  //border:10px solid red;
+  transition:transform 0.3s;
+  
+}
+.red{
+  color:red;
+}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="images" id="imgwrapper">
+    <img src="https://i.loli.net/2019/03/31/5ca0cd0f56bd1.jpg" alt="轮播图1" width=150 height=100>
+    <img src="https://i.loli.net/2019/03/31/5ca0cd16e4904.jpg" alt="轮播图2" width=150 height=100>
+    <img src="https://i.loli.net/2019/03/31/5ca0cd18d3931.jpg" alt="轮播图3" width=150 height=100>
+  </div>
+</div>  
+<div class="buttons">
+  <button id='p1'>第1张</button>
+  <button id='p2'>第2张</button>
+  <button id='p3'>第3张</button>
+</div>
+  
+<script id="jsbin-javascript">
+allButtons = $('.buttons>button')
+
+//监听按钮点击、点击后给imgwrapper相应样式
+for (let i = 0; i < allButtons.length; i++) {
+
+  $(allButtons[i]).on('click', function(xx) {
+    var index = $(xx.currentTarget).index() //在兄弟元素中排行第几
+      console.log(index)
+      console.log('====')
+    var s = index * (-150)
+    $('#imgwrapper').css({
+      transform: 'translateX(' + s + 'px)'
+    })
+    n = index
+    激活按钮(allButtons.eq(n % size))
+  })
+}
+
+var n = 0
+var size = allButtons.length
+播放第几张幻灯片(n % size)
+timerId = 定闹钟()//实现自动播放功能
+
+//鼠标移入window时自动播放停止
+$('.window').on('mouseenter', function() {
+  window.clearInterval(timerId)
+})
+
+//鼠标移出window时自动播放继续
+$('.window').on('mouseleave', function() {
+  timerId = 定闹钟()
+})
+
+
+function 激活按钮($button) {
+  $button.addClass('red')
+    .siblings('.red').removeClass('red')
+}
+
+function 播放第几张幻灯片(index) {
+  allButtons.eq(index).trigger('click')
+
+}
+
+function 定闹钟() {
+  return setInterval(() => {
+    n += 1
+    播放第几张幻灯片(n % size)
+  }, 2000)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>
