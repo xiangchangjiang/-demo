@@ -1,0 +1,40 @@
+*{margin:0;padding:0;}
+.window{border:2px solid black;}
+*{box-sizing: border-box;}
+.window{
+  width:400px;
+  height: 300px;
+  margin:20px auto;
+  overflow: hidden;
+}
+.images{
+  /* display: flex; */
+  position: relative;
+}
+
+.images>img{
+  position: absolute;
+  top:0;
+  z-index: 0; 
+  transition:all 0.5s linear;
+  
+}
+
+
+.images>img.Xleft{
+  z-index: 1;
+  
+  transform:translateX(-100%);
+}
+.images>img.Xright{
+  
+  z-index: 0;
+  transform:translateX(100%);
+  
+}
+.images>img.Xcenter{
+  z-index:2;
+  left:0;
+  transform:translateX(0);
+  
+}
