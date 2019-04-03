@@ -1,6 +1,7 @@
 let n
 let arr = $(`.images>img`)
-初始化()
+
+init()
 setInterval(function () {
   //console.log(n)
   makeXleft(getImage(n))
@@ -33,7 +34,7 @@ function makeXcenter($node) {
   return $node
 }
 
-function 初始化() {
+function init() {
   n = 1
   $(`.images>img:nth-child(${n})`).addClass('Xcenter').siblings().addClass('Xright')
 }
@@ -42,7 +43,7 @@ function 初始化() {
 //console.log(arr)
 function x(n) {
   let size = arr.length
-  if (n > 3) {
+  if (n > size) {
     n = n % size
     if (n === 0) {
       n = size
