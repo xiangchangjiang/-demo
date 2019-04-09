@@ -2,7 +2,7 @@ let n
 let arr = $(`.images>img`)
 
 init()
-setInterval(function () {
+let timer=setInterval(function () {
   //console.log(n)
   makeXleft(getImage(n))
     .one('transitionend', function (e) {
@@ -11,7 +11,27 @@ setInterval(function () {
 
   makeXcenter(getImage(n + 1))
   n += 1
-}, n * 3000)
+}, 2000)
+
+
+/*当浏览器当前窗口切走以后，过一会又切回来时轮播顺序会错乱，因为浏览器在当前窗口被切走后偷懒了，时间不同，把许多轮播放在一起执行了  解决思路：监听当前窗口是否被切换（visivilitychange）,切走时轮播停止，切回时轮播再继续。 */
+document.addEventListener('visibilitychange',function(e){
+  if(document.hidden){
+    window.clearInterval(timer)
+  }
+  else{
+    timer=setInterval(function () {
+      //console.log(n)
+      makeXleft(getImage(n))
+        .one('transitionend', function (e) {
+          makeXright($(e.currentTarget))
+        })
+    
+      makeXcenter(getImage(n + 1))
+      n += 1
+    }, 2000)
+  }
+})
 
 
 //下面是工具函数
